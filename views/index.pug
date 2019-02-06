@@ -13,7 +13,10 @@ block content
       domain: '#{env.AUTH0_DOMAIN}',
       scope: "openid profile", // Learn about scopes: https://auth0.com/docs/scopes
       responseType: "code",
-      redirectUri: '#{env.AUTH0_CALLBACK_URL}'
+      redirectUri: '#{env.AUTH0_CALLBACK_URL}',
+      theme: {
+        logo: 'http://apps.eha.io/images/eha-logo.jpg'
+      }
     });
 
     auth0.authorize();
