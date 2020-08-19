@@ -12,6 +12,10 @@ var authenticateWithPromptNone = passport.authenticate('auth0', {
   prompt: 'none'
 });
 
+router.get('/repel-scraper',
+  function (req, res) {
+    res.redirect('http://127.0.0.1:22097')
+  });
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -33,11 +37,11 @@ router.get('/logout', function(req, res){
   var logoutUrl = env.LOGOUT_URL;
 
   if (env.LOGOUT_AUTH0 === 'true') {
-    logoutUrl = 'https://' + env.AUTH0_DOMAIN + '/v2/logout?returnTo=' 
+    logoutUrl = 'https://' + env.AUTH0_DOMAIN + '/v2/logout?returnTo='
       + env.LOGOUT_URL + '&client_id=' + env.AUTH0_CLIENT_ID
       + (env.LOGOUT_FEDERATED === 'true'? '&federated' : '');
   }
-  
+
   req.logout();
   res.redirect(logoutUrl);
 });
@@ -52,7 +56,7 @@ router.get('/callback',
       if (info === 'login_required') {
         return res.redirect('/login?sso=false');
       }
-      
+
       if (user) {
         return req.login(user, function (err) {
           if (err) {
